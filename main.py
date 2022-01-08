@@ -7,7 +7,7 @@ def promptCaes():
 	original = input()
 	shift = input ("Enter the shift value, positive or negative: ")
 
-	print("Result is:", answers = ciphers.caeser(original, shift))
+	print("Result is:", ciphers.caeser(original, shift))
 
 def promptBlock():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
