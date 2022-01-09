@@ -62,3 +62,29 @@ def blockCipher(aStr, cipher):
 		result += let
 		
 	return result
+
+def amsco(key, aStr):
+	keys = list(str(key))
+	size = int(len(aStr) / len(str(key)))
+	aLst = [0]*size
+
+	for i in range(len(aLst)):
+		aLst[i] =  [0]*(size - 1) 
+
+	start = 0
+	end = 2
+	for i in range(len(aLst[0])):
+		for j in range(len(aLst)):
+			aLst[j][i] = aStr[start : end]
+			start = end
+			if end % 3 == 2:
+				end += 1
+			elif end % 3 == 0:
+				end += 2
+
+	result = ""
+	for i in range(len(keys)):
+		for j in range(2):
+			result += aLst[int(keys[i]) - 1][j]
+
+	return result

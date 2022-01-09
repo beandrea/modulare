@@ -23,7 +23,9 @@ def switcher(op):
 		promptCaes()
 	elif(op == 'block'):
 		promptBlock()
+	elif(op == 'amsco'):
+		exit()
 	else:
 		print("Invalid Entry")
 
-switcher(input("What cipher do you need run? Enter 'caeser' or 'block': ").strip().lower())
+switcher(input("What kind of cipher do you need to be run? Enter 'caeser', 'block', 'amsco': ").strip().lower())
