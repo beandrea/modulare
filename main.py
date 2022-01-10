@@ -1,9 +1,18 @@
 import ciphers
 
+def promptAmsco():
+	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
+	wrdLst = ["encoded","original"]
+	print("Enter the", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "", "string: ")
+	original = input()
+	key = input("Enter the amsco key in the form xyz: ")
+	
+	print("Result is:", ciphers.amsco(key, original))
+
 def promptCaes():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
 	wrdLst = ["encoded","original"]
-	print("Enter the", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "valid", "string: ")
+	print("Enter the", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "", "string: ")
 	original = input()
 	shift = input ("Enter the shift value, positive or negative: ")
 
@@ -12,7 +21,7 @@ def promptCaes():
 def promptBlock():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
 	wrdLst = ["encoded","original"]
-	print("Enter the", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "valid", "string: ")
+	print("Enter the", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "", "string: ")
 	original = input()
 	blocks = input("Enter the block cipher in the format xyz:yxz ")
 	
@@ -24,7 +33,7 @@ def switcher(op):
 	elif(op == 'block'):
 		promptBlock()
 	elif(op == 'amsco'):
-		exit()
+		promptAmsco()
 	else:
 		print("Invalid Entry")
 
