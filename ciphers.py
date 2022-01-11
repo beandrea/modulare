@@ -1,6 +1,46 @@
 class CustomError(Exception):
 	pass
 
+alpha = [0]*26
+caps = [0]*26
+	
+for i in range(97, 123):
+	alpha[i - 97] = chr(i)
+	
+for i in range(65, 91):
+	caps[i - 65] = chr(i)
+
+def numToEN(num):
+	num = int(num)
+	if(num < 0):
+		raise CustomError("Number cannot be less than zero")
+
+	d = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five', 6 : 'six', 
+		7 : 'seven', 8 : 'eight', 9 : 'nine', 10 : 'ten', 11 : 'eleven', 12 : 'twelve', 
+		13 : 'thirteen', 14 : 'fourteen', 15 : 'fifteen', 16 : 'sixteen', 17 : 'seventeen', 
+		18 : 'eighteen', 19 : 'nineteen', 20 : 'twenty', 30 : 'thirty', 40 : 'forty', 
+		50 : 'fifty', 60 : 'sixty', 70 : 'seventy', 80 : 'eighty', 90 : 'ninety'}
+
+	if(num < 20):
+		return d[num]
+	elif(num < 100):
+		if(num % 10 == 0):
+			return d[num]
+		else: 
+			return d[num // 10 * 10] + "" + d[num % 10]
+	elif(num < 1000):
+		if num % 100 == 0: 
+			return d[num // 100] + "hundred"
+		else: 
+			return d[num // 100] + "hundredand" + numToEN(num % 100)
+	elif(num < 1000000):
+		if num % 1000 == 0: 
+			return numToEN(num // 1000) + "thousand"
+		else: 
+			return numToEN(num // 1000) + "thousand" + numToEN(num % 1000)
+	else:
+		raise CustomError("Number cannot be larger than 1,000,000")
+
 def amsco(aStr, key):
 	aStr = "".join(aStr.split())
 	keys = list(str(key))
@@ -36,15 +76,6 @@ def autokey(original, primer):
 	primer += original
 	primer = "".join(primer.split())[0:len(original)].upper()
 
-	alpha = [0]*26
-	caps = [0]*26
-	
-	for i in range(97, 123):
-		alpha[i - 97] = chr(i)
-	
-	for i in range(65, 91):
-		caps[i - 65] = chr(i)
-
 	result = ""
 	for i in range(len(primer)):
 		if primer[i].isdigit:
@@ -55,6 +86,16 @@ def autokey(original, primer):
 
 	return result
 
+def bazeries(original, key):
+	original = list("".join(original.split()))
+	key = numToEN(key).upper()
+	temp = []
+
+	[temp.append(x) for x in key if x not in temp]
+	key = temp	
+	
+	return ""
+	
 def blockCipher(aStr, cipher):
 	if(not(":" in cipher)):
 		raise CustomError("Invalid formatting")
@@ -84,15 +125,6 @@ def blockCipher(aStr, cipher):
 	return result
 
 def caeser(aStr, offset):
-	alpha = [0]*26
-	caps = [0]*26
-	
-	for i in range(97, 123):
-		alpha[i - 97] = chr(i)
-	
-	for i in range(65, 91):
-		caps[i - 65] = chr(i)
-
 	result = ""
 	
 	for i in range(len(aStr)):
