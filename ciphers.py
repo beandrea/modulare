@@ -1,9 +1,8 @@
 class CustomError(Exception):
 	pass
 
-def amsco(key, aStr):
-	aStr = aStr.split()
-	aStr ="".join(aStr)
+def amsco(aStr, key):
+	aStr = "".join(aStr.split())
 	keys = list(str(key))
 	size = int(len(aStr) / len(str(key)))
 	aLst = [0]*len(keys)
@@ -30,7 +29,31 @@ def amsco(key, aStr):
 	return result
 
 def autokey(original, primer):
-	return ""
+	pLen = len(primer)
+
+	original = "".join(original.split(", "))
+	original = "".join(original.split()).lower()
+	primer += original
+	primer = "".join(primer.split())[0:len(original)].upper()
+
+	alpha = [0]*26
+	caps = [0]*26
+	
+	for i in range(97, 123):
+		alpha[i - 97] = chr(i)
+	
+	for i in range(65, 91):
+		caps[i - 65] = chr(i)
+
+	result = ""
+	for i in range(len(primer)):
+		if primer[i].isdigit:
+			raise CustomError("Digit entered in primer string")
+		result +=  caps[(caps.index(primer[i]) + alpha.index(original[i])) % len(caps)]
+		if (i + 1) % (pLen - 1) == 0:
+			result += " "
+
+	return result
 
 def blockCipher(aStr, cipher):
 	if(not(":" in cipher)):

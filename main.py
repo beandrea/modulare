@@ -7,10 +7,18 @@ def promptAmsco():
 	original = input()
 	key = input("Enter the amsco key in the form xyz, where the length of the key is, at most, one third the length of the string entered: ")
 	
-	print("Result is:", ciphers.amsco(key, original))
+	print("Result is:", ciphers.amsco(original, key))
 
-def promptAutokey(original, primer):
-	print("Result is:", ciphers.autokey(original, primer))
+def promptAutokey():
+	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
+	wrdLst = ["an encoded","an original"]
+	print("Enter", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "a valid", "string: ")
+	original = input()
+	primer = input("Enter a primer string, letters only: ")
+	if primer.isalpha():
+		print("Result is:", ciphers.autokey(original, primer))
+	else:
+		print("Please only enter letters")
 
 def promptBlock():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
@@ -33,8 +41,8 @@ def promptCaes():
 def switcher(op):
 	if(op == 'amsco'):
 		promptAmsco()
-	elif(op == 'test'):
-		promptAutokey('', '')
+	elif(op == 'autokey'):
+		promptAutokey()
 	elif(op == 'block'):
 		promptBlock()
 	elif(op == 'caeser'):
@@ -42,4 +50,4 @@ def switcher(op):
 	else:
 		print("Invalid Entry")
 
-switcher(input("What kind of cipher do you need to be run? Enter 'caeser', 'block', 'amsco', 'test': ").strip().lower())
+switcher(input("What kind of cipher do you need to be run? Enter 'amsco', 'autokey', 'block', or 'caeser': ").strip().lower())
