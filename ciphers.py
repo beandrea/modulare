@@ -64,18 +64,20 @@ def blockCipher(aStr, cipher):
 	return result
 
 def amsco(key, aStr):
+	aStr = aStr.split()
+	aStr ="".join(aStr)
 	keys = list(str(key))
 	size = int(len(aStr) / len(str(key)))
-	aLst = [0]*size
+	aLst = [0]*len(keys)
 
 	for i in range(len(aLst)):
-		aLst[i] =  [0]*len(keys) 
+		aLst[i] =  [0]*(size - 1) 
 
 	start = 0
 	end = 2
-	for i in range(len(aLst)):
-		for j in range(len(aLst[0])):
-			aLst[j][i] = aStr[start : end]
+	for j in range(len(aLst[0])):
+		for i in range(len(aLst)):
+			aLst[i][j] = aStr[start : end]
 			start = end
 			if end % 3 == 2:
 				end += 1
@@ -85,8 +87,6 @@ def amsco(key, aStr):
 	result = ""
 	for i in range(len(keys)):
 		for j in range(len(aLst[0])):
-			print(int(keys[i]) - 1)
-			print(aLst[int(keys[i]) - 1][j])
-			result += aLst[int(keys[i]) - 1][j]
+			result += aLst[keys.index(str(i + 1))][j]
 
 	return result

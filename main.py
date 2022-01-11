@@ -9,6 +9,9 @@ def promptAmsco():
 	
 	print("Result is:", ciphers.amsco(key, original))
 
+def promptAmsco(key, original):
+	print("Result is:", ciphers.amsco(key, original))
+
 def promptCaes():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
 	wrdLst = ["an encoded","an original"]
@@ -34,7 +37,9 @@ def switcher(op):
 		promptBlock()
 	elif(op == 'amsco'):
 		promptAmsco()
+	elif(op == 'test'):
+		promptAmsco('41325', 'Incomplete columnar with alternating single letters and digraphs')
 	else:
 		print("Invalid Entry")
 
-switcher(input("What kind of cipher do you need to be run? Enter 'caeser', 'block', 'amsco': ").strip().lower())
+switcher(input("What kind of cipher do you need to be run? Enter 'caeser', 'block', 'amsco', 'test': ").strip().lower())
