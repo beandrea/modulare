@@ -1,6 +1,65 @@
 class CustomError(Exception):
 	pass
 
+def amsco(key, aStr):
+	aStr = aStr.split()
+	aStr ="".join(aStr)
+	keys = list(str(key))
+	size = int(len(aStr) / len(str(key)))
+	aLst = [0]*len(keys)
+
+	for i in range(len(aLst)):
+		aLst[i] =  [0]*(size - 1) 
+
+	start = 0
+	end = 2
+	for j in range(len(aLst[0])):
+		for i in range(len(aLst)):
+			aLst[i][j] = aStr[start : end]
+			start = end
+			if end % 3 == 2:
+				end += 1
+			elif end % 3 == 0:
+				end += 2
+
+	result = ""
+	for i in range(len(keys)):
+		for j in range(len(aLst[0])):
+			result += aLst[keys.index(str(i + 1))][j]
+
+	return result
+
+def autokey(original, primer):
+	return ""
+
+def blockCipher(aStr, cipher):
+	if(not(":" in cipher)):
+		raise CustomError("Invalid formatting")
+
+	blockOne = list(cipher[: cipher.index(":")])
+	blockTwo = list(cipher[cipher.index(":") + 1:])
+
+	if(not(len(blockOne) == len(blockTwo))):
+		raise CustomError("Cipher must have equal length on both sides")
+
+	for i in range(len(blockOne)):
+		blockOne[i] = int(blockOne[i]) - 1
+
+	for i in range(len(blockTwo)):
+		blockTwo[i] = int(blockTwo[i]) - 1	
+
+	coded = [0]*len(aStr)
+
+	for i in range(0, len(aStr), len(blockOne)):
+		for j in range(0, len(blockOne)):
+			coded[blockOne[j] + i] = aStr[blockTwo[j] + i]
+
+	result = ""
+	for let in coded:
+		result += let
+		
+	return result
+
 def caeser(aStr, offset):
 	alpha = [0]*26
 	caps = [0]*26
@@ -32,61 +91,4 @@ def caeser(aStr, offset):
 				place = 25
 		
 			result += caps[place]
-	return result
-
-
-def blockCipher(aStr, cipher):
-	if(not(":" in cipher)):
-		raise CustomError("Invalid formatting")
-
-	blockOne = list(cipher[: cipher.index(":")])
-	blockTwo = list(cipher[cipher.index(":") + 1:])
-
-	if(not(len(blockOne) == len(blockTwo))):
-		raise CustomError("Cipher must have equal length on both sides")
-
-	for i in range(len(blockOne)):
-		blockOne[i] = int(blockOne[i]) - 1
-
-	for i in range(len(blockTwo)):
-		blockTwo[i] = int(blockTwo[i]) - 1	
-
-	coded = [0]*len(aStr)
-
-	for i in range(0, len(aStr), len(blockOne)):
-		for j in range(0, len(blockOne)):
-			coded[blockOne[j] + i] = aStr[blockTwo[j] + i]
-
-	result = ""
-	for let in coded:
-		result += let
-		
-	return result
-
-def amsco(key, aStr):
-	aStr = aStr.split()
-	aStr ="".join(aStr)
-	keys = list(str(key))
-	size = int(len(aStr) / len(str(key)))
-	aLst = [0]*len(keys)
-
-	for i in range(len(aLst)):
-		aLst[i] =  [0]*(size - 1) 
-
-	start = 0
-	end = 2
-	for j in range(len(aLst[0])):
-		for i in range(len(aLst)):
-			aLst[i][j] = aStr[start : end]
-			start = end
-			if end % 3 == 2:
-				end += 1
-			elif end % 3 == 0:
-				end += 2
-
-	result = ""
-	for i in range(len(keys)):
-		for j in range(len(aLst[0])):
-			result += aLst[keys.index(str(i + 1))][j]
-
 	return result

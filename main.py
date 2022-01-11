@@ -9,17 +9,8 @@ def promptAmsco():
 	
 	print("Result is:", ciphers.amsco(key, original))
 
-def promptAmsco(key, original):
-	print("Result is:", ciphers.amsco(key, original))
-
-def promptCaes():
-	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
-	wrdLst = ["an encoded","an original"]
-	print("Enter", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "a valid", "string: ")
-	original = input()
-	shift = input ("Enter the shift value, positive or negative: ")
-
-	print("Result is:", ciphers.caeser(original, shift))
+def promptAutokey(original, primer):
+	print("Result is:", ciphers.autokey(original, primer))
 
 def promptBlock():
 	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
@@ -30,15 +21,24 @@ def promptBlock():
 	
 	print("Result is: \n", ciphers.blockCipher(original, blocks))
 
+def promptCaes():
+	dOrE = input("Enter 'D' for decode or 'E' for encode: ").strip().lower()
+	wrdLst = ["an encoded","an original"]
+	print("Enter", wrdLst[0] if dOrE == "d" else wrdLst[1] if dOrE == "e" else "a valid", "string: ")
+	original = input()
+	shift = input ("Enter the shift value, positive or negative: ")
+
+	print("Result is:", ciphers.caeser(original, shift))
+
 def switcher(op):
-	if(op == 'caeser'):
-		promptCaes()
-	elif(op == 'block'):
-		promptBlock()
-	elif(op == 'amsco'):
+	if(op == 'amsco'):
 		promptAmsco()
 	elif(op == 'test'):
-		promptAmsco('41325', 'Incomplete columnar with alternating single letters and digraphs')
+		promptAutokey('', '')
+	elif(op == 'block'):
+		promptBlock()
+	elif(op == 'caeser'):
+		promptCaes()
 	else:
 		print("Invalid Entry")
 
