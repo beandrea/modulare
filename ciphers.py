@@ -15,24 +15,24 @@ def numToEN(num):
 	if(num < 0):
 		raise CustomError("Number cannot be less than zero")
 
-	d = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five', 6 : 'six', 
+	aDict = {0 : 'zero', 1 : 'one', 2 : 'two', 3 : 'three', 4 : 'four', 5 : 'five', 6 : 'six', 
 		7 : 'seven', 8 : 'eight', 9 : 'nine', 10 : 'ten', 11 : 'eleven', 12 : 'twelve', 
 		13 : 'thirteen', 14 : 'fourteen', 15 : 'fifteen', 16 : 'sixteen', 17 : 'seventeen', 
 		18 : 'eighteen', 19 : 'nineteen', 20 : 'twenty', 30 : 'thirty', 40 : 'forty', 
 		50 : 'fifty', 60 : 'sixty', 70 : 'seventy', 80 : 'eighty', 90 : 'ninety'}
 
 	if(num < 20):
-		return d[num]
+		return aDict[num]
 	elif(num < 100):
 		if(num % 10 == 0):
-			return d[num]
+			return aDict[num]
 		else: 
-			return d[num // 10 * 10] + "" + d[num % 10]
+			return aDict[num // 10 * 10] + "" + aDict[num % 10]
 	elif(num < 1000):
 		if num % 100 == 0: 
-			return d[num // 100] + "hundred"
+			return aDict[num // 100] + "hundred"
 		else: 
-			return d[num // 100] + "hundredand" + numToEN(num % 100)
+			return aDict[num // 100] + "hundredand" + numToEN(num % 100)
 	elif(num < 1000000):
 		if num % 1000 == 0: 
 			return numToEN(num // 1000) + "thousand"
@@ -87,14 +87,43 @@ def autokey(original, primer):
 	return result
 
 def bazeries(original, key):
+	original = original.lower()
 	original = list("".join(original.split()))
 	key = numToEN(key).upper()
-	temp = []
+	tmp = []
 
-	[temp.append(x) for x in key if x not in temp]
-	key = temp	
+	[tmp.append(x) for x in key if x not in tmp]
+	[tmp.append(x) for x in caps if x not in tmp]
+	key = tmp
+
+	hld = []
+	start = 0
+	mark = 20
+
+	while start <= 5:
+		for i in range(start, len(alpha), 5):
+			hld.append(alpha[i])
+			if i == mark:
+				start += 1
+				mark += 1
+
+	result = ""
+	temp = original
+	move = 3
+	for i in range(0, len(temp), move):
+		original[i: (i + move)].reverse()
+		for let in original:
+			result += key[hld.index(let)]
+		if move == 3:
+			move = 7
+		elif move == 7:
+			move = 5
+		elif move == 5:
+			move = 2
+		elif move == 2:
+			move = 3
 	
-	return ""
+	return result
 	
 def blockCipher(aStr, cipher):
 	if(not(":" in cipher)):
