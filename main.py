@@ -29,6 +29,7 @@ def promptBazeries():
 	print("Result is: \n", ciphers.bazeries(original, key))
 
 def promptBazeries(original, key):
+	print("Original is: \n", original.upper()) 
 	print("Result is: \n", ciphers.bazeries(original, key))
 
 def promptBlock():

@@ -87,22 +87,32 @@ def autokey(original, primer):
 	return result
 
 def bazeries(original, key):
+	'''this method of bazeries will return different results than most, as I made the choice to include both i
+		and j, which throws off the indexing versus other people, as the original bazeries uses a 5x5 grid
+		that considers i and j the same simple'''
+	
+	'''sets the whole entered string to lower case for simplicity, then turns it into a list without spaces'''
 	original = original.lower()
 	original = list("".join(original.split()))
+	
+	'''turns key number into english letters, then sets it up to a list and adds any missed letters in 
+		alphabetical order'''
 	key = numToEN(key).upper()
 	tmp = []
-
 	[tmp.append(x) for x in key if x not in tmp]
 	[tmp.append(x) for x in caps if x not in tmp]
 	key = tmp
 
+
+	'''sets up an array like the one used in the original bazeries method, to mimic indexing as best as
+		possible while including both i and j'''
 	hld = []
 	start = 0
 	mark = 20
 
-	while start <= 5:
+	while start < 5:
 		for i in range(start, len(alpha), 5):
-			hld.append(alpha[i])
+			hld.append(alpha[i]) 
 			if i == mark:
 				start += 1
 				mark += 1
@@ -111,9 +121,13 @@ def bazeries(original, key):
 	temp = original
 	move = 3
 	for i in range(0, len(temp), move):
-		original[i: (i + move)].reverse()
+		original = temp[i: (i + move)]
+		original.reverse()
 		for let in original:
-			result += key[hld.index(let)]
+			tmp = key[hld.index(let)]
+			result += tmp
+			if len(result) % 6 == 5:
+				result += " "
 		if move == 3:
 			move = 7
 		elif move == 7:
