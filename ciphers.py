@@ -33,7 +33,7 @@ def numToEN(num):
 			return aDict[num // 100] + "hundred"
 		else: 
 			return aDict[num // 100] + "hundredand" + numToEN(num % 100)
-	elif(num < 1000000):
+	elif(num < (1000 * 1000)):
 		if num % 1000 == 0: 
 			return numToEN(num // 1000) + "thousand"
 		else: 
@@ -86,57 +86,51 @@ def autokey(original, primer):
 
 	return result
 
-def bazeries(original, key):
-	'''this method of bazeries will return different results than most, as I made the choice to include both i
-		and j, which throws off the indexing versus other people, as the original bazeries uses a 5x5 grid
-		that considers i and j the same simple'''
-	
+def bazeries(original, key):	
 	'''sets the whole entered string to lower case for simplicity, then turns it into a list without spaces'''
 	original = original.lower()
 	original = list("".join(original.split()))
 	
 	'''turns key number into english letters, then sets it up to a list and adds any missed letters in 
 		alphabetical order'''
-	key = numToEN(key).upper()
+	orgKey = key
+	key = list(numToEN(key).upper())
 	tmp = []
-	[tmp.append(x) for x in key if x not in tmp]
-	[tmp.append(x) for x in caps if x not in tmp]
+	for e in key:
+		if e not in tmp:
+			tmp.append(e)
+
 	key = tmp
-
-
-	'''sets up an array like the one used in the original bazeries method, to mimic indexing as best as
-		possible while including both i and j'''
-	hld = []
-	start = 0
-	mark = 20
-
-	while start < 5:
-		for i in range(start, len(alpha), 5):
-			hld.append(alpha[i]) 
-			if i == mark:
-				start += 1
-				mark += 1
+	
+	alfa = [0]*25
+	
+	for i in range(97, 106):
+		alfa[i - 97] = chr(i)
+	for i in range(107, 123):
+		alfa[i - 98] = chr(i)	
+	for i in range(65, 73):
+		if chr(i) not in key:
+			key.append(chr(i))
+	for i in range(75, 91):
+		if chr(i) not in key:
+			key.append(chr(i))
 
 	result = ""
-	temp = original
-	move = 3
-	for i in range(0, len(temp), move):
-		original = temp[i: (i + move)]
-		original.reverse()
-		for let in original:
-			tmp = key[hld.index(let)]
+	move = list(str(orgKey))
+	moveIn = 0
+	for i in range(0, len(original), int(move[moveIn])):
+		temp = original[i: (i + int(move[moveIn]))]
+		temp.reverse()
+		moveIn += 1
+
+		if moveIn == len(move):
+			moveIn == 0
+			
+		for let in temp:
+			tmp = key[alfa.index(let)]
 			result += tmp
 			if len(result) % 6 == 5:
 				result += " "
-		if move == 3:
-			move = 7
-		elif move == 7:
-			move = 5
-		elif move == 5:
-			move = 2
-		elif move == 2:
-			move = 3
-	
 	return result
 	
 def blockCipher(aStr, cipher):
