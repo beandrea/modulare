@@ -102,12 +102,19 @@ def bazeries(original, key):
 
 	key = tmp
 	
-	alfa = [0]*25
-	
+	letLst = []
 	for i in range(97, 106):
-		alfa[i - 97] = chr(i)
+		letLst.append(chr(i))
 	for i in range(107, 123):
-		alfa[i - 98] = chr(i)	
+		letLst.append(chr(i))
+
+	alfa = []
+	start = 0
+	while len(alfa) <= 24:
+		for i in range(start, len(letLst), 5):
+			alfa.append(letLst[i])
+		start += 1
+
 	for i in range(65, 73):
 		if chr(i) not in key:
 			key.append(chr(i))
@@ -115,17 +122,22 @@ def bazeries(original, key):
 		if chr(i) not in key:
 			key.append(chr(i))
 
+	print(alfa)
+	print(key)
+
 	result = ""
 	move = list(str(orgKey))
 	moveIn = 0
+	
 	for i in range(0, len(original), int(move[moveIn])):
 		temp = original[i: (i + int(move[moveIn]))]
 		temp.reverse()
+
 		moveIn += 1
 
-		if moveIn == len(move):
-			moveIn == 0
-			
+		if moveIn >= (len(move) - 1):
+			moveIn = 0
+		
 		for let in temp:
 			tmp = key[alfa.index(let)]
 			result += tmp
